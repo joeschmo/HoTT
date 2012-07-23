@@ -85,13 +85,13 @@ Section Non_dependent.
     intros B pt lp.
     eapply concat.
     apply map_dep_trivial2.
-    moveright_onleft.
+    apply concat_moveright_onleft.
     eapply concat.
-    apply compute_loop with (P := fun _ => B).
+    apply compute_loop with (P := fun x => B).
     unwhisker.
   Defined.
 End Non_dependent.
-
+(*
 (* The definition of circle gives "the best possible circle" in a given
    model. If the circle is trivial, then the model satisfies UIP. *)
 Theorem circle_contr_implies_UIP  (C : Circle) :
@@ -140,3 +140,4 @@ Section Streicher_and_Circle.
     apply little_lemma.
   Defined.
 End Streicher_and_Circle.
+*)
