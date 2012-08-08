@@ -90,6 +90,13 @@ Section Non_dependent.
     apply compute_loop with (P := fun x => B).
     unwhisker.
   Defined.
+
+  Definition compute_loop_eta' : forall B pt lp,
+    map (fun x => circle_rect' B pt lp x) loop
+    == compute_base' B pt lp @ lp @ !compute_base' B pt lp.
+  Proof.
+    admit.
+  Defined.
 End Non_dependent.
 (*
 (* The definition of circle gives "the best possible circle" in a given

@@ -337,7 +337,7 @@ Defined.
 (** Taking opposites of 1-paths is functorial on 2-paths. *)
 
 Definition opposite2 {A} {x y : A} {p q : x == y} (a : p == q) : (!p == !q)
-  := map opposite a.
+ := map opposite a.
 (*Proof.
   path_induction.
 Defined.*)
