@@ -84,46 +84,29 @@ Definition torus_rect'
                  lp2)) : P x :=
   torus_rect torus P pt lp1 lp2 f x.
 
-Definition t_to_c_compute_tbase : torus_to_circles tbase == (base, base).
-Proof.
-  unfold torus_to_circles.
-  apply nd_compute_tbase.
-Defined.
+Definition t_to_c_compute_tbase : torus_to_circles tbase == (base, base) :=
+  nd_compute_tbase torus (circle * circle) (base, base) _ _ _.
 
-Definition c_to_t_compute_bases : circles_to_torus (base, base) == tbase.
-Proof.
-  unfold circles_to_torus.
-  unfold circles_to_torus'.
-  unfold uncurry.
-  rewrite compute_base'.
-  apply compute_base'.
-Defined.
+Definition c_to_c_compute_base :
+  circle_rect' circle (circle -> torus) (circle_rect' circle torus tbase loop2) 
+               (funext_dep circle (fun _ : circle => torus)
+                 (circle_rect' circle torus tbase loop2)
+                 (circle_rect' circle torus tbase loop2) circles_fst_loop)
+               base base
+  == circle_rect' circle torus tbase loop2 base :=
+  happly (compute_base' circle (circle -> torus) (circle_rect' circle torus tbase loop2) _) base.
 
-Definition torus_circles_torus_base : circles_to_torus (torus_to_circles tbase) == tbase.
-Proof.
-  rewrite t_to_c_compute_tbase.
-  apply c_to_t_compute_bases.
-Defined.
+Definition c_to_t_compute_bases :
+  circle_rect' circle torus tbase loop2 base == tbase :=
+  compute_base' circle torus tbase loop2.
 
-Definition idpth : circles_to_torus (torus_to_circles tbase) == tbase.
-Proof.
-  unfold torus_to_circles.
-  rewrite nd_compute_tbase.
-  unfold circles_to_torus.
-  unfold circles_to_torus'.
-  unfold uncurry.
-  rewrite compute_base'.
-  apply compute_base'.
-Defined.
+Definition idpth : circles_to_torus (torus_to_circles tbase) == tbase :=
+  map circles_to_torus t_to_c_compute_tbase @ c_to_c_compute_base @ c_to_t_compute_bases.
 
 Definition q' : 
   (fun x : circle => circles_to_torus' x (snd (torus_to_circles tbase))) ==
-  (fun x : circle => circles_to_torus' x base).
-Proof.
-  rewrite t_to_c_compute_tbase.
-  simpl.
-  apply idpath.
-Defined.
+  (fun x : circle => circles_to_torus' x base) :=
+  map (fun y => (fun x : circle => circles_to_torus' x y)) (map (fun xy => snd xy) t_to_c_compute_tbase).
 
 Definition idpth_to_idpath :
     !compute_base' circle torus tbase loop2 @
@@ -149,19 +132,16 @@ Definition idpth_to_idpath :
     idpth ==
     idpath tbase.
 Proof.
-  unfold idpth.
-  unfold paths_rew_r.
-  unfold paths_sym.
-  
-  unfold torus_to_circles.
-  unfold circles_to_torus.
-  unfold circles_to_torus'.
-  unfold uncurry.
-  unfold c_to_t_compute_bases.
+  unfold idpth.  
   unfold t_to_c_compute_tbase.
-  unfold paths_rew_r.
-  unfold paths_sym.
-  admit.
+  unfold c_to_c_compute_base.
+  unfold c_to_t_compute_bases.
+  unfold circles_to_torus.
+  unfold uncurry.
+  unfold circles_to_torus'.
+  simpl.
+  associate_right.
+  
 Defined.
 
 Lemma torus_circles_torus :
