@@ -7,6 +7,11 @@ NOTES TO SELF:
 @ has the reverse argument order of path composition in agda
 *)
 
+Definition concat_opposite A (x y z : A) (p : x == y) (q : y == z) : !q @ !p == !(p @ q).
+Proof.
+  path_induction.
+Defined.
+
 Definition nd_fst_path {A B} {p q : A * B} : (p == q) -> (fst p) == (fst q).
 Proof.
   intros.

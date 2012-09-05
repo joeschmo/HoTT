@@ -140,8 +140,28 @@ Proof.
   unfold uncurry.
   unfold circles_to_torus'.
   simpl.
+  unfold q'.
   associate_right.
-  
+  apply concat_moveright_onleft.
+  apply opposite.
+  hott_simpl.
+  apply opposite.
+  associate_left.
+  apply concat_moveright_onright.
+  apply opposite.
+  hott_simpl.
+  apply opposite.
+  apply concat_moveright_onright.
+  associate_right.
+  apply concat_moveright_onleft.
+  apply opposite.
+  hott_simpl.
+  apply opposite.
+  associate_left.
+  rewrite concat_opposite.
+  unfold circles_to_torus'.
+  unfold t_to_c_compute_tbase.
+  unfold happly
 Defined.
 
 Lemma torus_circles_torus :

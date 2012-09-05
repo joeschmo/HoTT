@@ -418,7 +418,7 @@ Lemma happly_concat A B (f g h : A -> B) (p : f == g) (q : g == h) (x:A) :
 Proof.
   path_induction.
 Defined.
-
+un
 Hint Rewrite happly_concat : paths.
 
 Lemma happly_opp A B (f g : A -> B) (p : f == g) (x : A) :
